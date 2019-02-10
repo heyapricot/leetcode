@@ -8,15 +8,19 @@
 
 const myAtoi = (input) => {
   if (input.length <= 0) return 0;
+  const MAX_INT = (2 ** 31) - 1;
+  const MIN_INT = (2 ** 31) * -1;
   let signModifier = 1;
   // Find first non whitespace
   let startIndex = ((str) => {
     let index = 0;
-    while (str[index].match(/\s/) !== null) {
+    while (index < str.length && str[index].match(/\s/)) {
       index += 1;
     }
     return index;
   })(input);
+
+  if (startIndex >= input.length) return 0;
 
   // First non-whitespace char is not a sign or a digit
   if (input[startIndex].match(/[-+\d]/) === null) return 0;
@@ -39,9 +43,15 @@ const myAtoi = (input) => {
 
   if (getDigits.length <= 0) return 0;
 
-  return Number(getDigits) * signModifier;
+  let convertedNumber = Number(getDigits) * signModifier;
+
+  if (convertedNumber > MAX_INT) convertedNumber = MAX_INT;
+  if (convertedNumber < MIN_INT) convertedNumber = MIN_INT;
+
+  return convertedNumber;
 };
 
+console.log(myAtoi(' '));
 console.log(myAtoi('42'));
 console.log(myAtoi('+'));
 console.log(myAtoi('   -42'));
