@@ -1,11 +1,11 @@
-const roman = (input, index = 0) => {
+const romanToIntegerRecursive = (input, index = 0) => {
   const equivalence = {
     I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000,
   };
   const currentChar = input[index];
   let currentValue = equivalence[currentChar];
   let nextValue = 0;
-  if (index < input.length - 1) nextValue = roman(input, index + 1);
+  if (index < input.length - 1) nextValue = romanToIntegerRecursive(input, index + 1);
 
   switch (currentChar) {
     case 'I':
@@ -25,4 +25,4 @@ const roman = (input, index = 0) => {
   return currentValue;
 };
 
-console.log(roman('MII'));
+console.log(romanToIntegerRecursive('MII'));
