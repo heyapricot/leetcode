@@ -4,38 +4,33 @@ const TreeNode = (val) => {
   return { left, right, val };
 };
 
-const isSymmetric = (root, queue = []) => {
-  let leftGrand = [];
-  let rightGrand = [];
-
-  [root.left, root.right].forEach((node, index) => {
+const isSymmetric = (root) => {
+  const BFS = (node, queue = [], output = []) => {
     if (node !== null) {
-      queue.push(node);
-      const grandChildren = [node.left, node.right].map((nod) => {
-        if (nod !== null) {
-          return nod.val;
-        }
+      // Visit node
+      output.push(node.val);
 
-        return '0';
-      });
-      index % 2 === 0 ? leftGrand = grandChildren : rightGrand = grandChildren;
+      // Add children to the queue
+      [node.left, node.right].forEach((nod) => { queue.push(nod); });
+    } else {
+      // node is null
+      output.push(null);
     }
-  });
 
-  if (leftGrand.join('') !== rightGrand.reverse().join('')) return false;
+    if (queue.length > 0) output = BFS(queue.splice(0, 1)[0], queue, output);
+    return output;
+  };
 
-  if (queue.length > 0) isSymmetric(queue.splice(0, 1)[0], queue);
-
-  return true;
+  return BFS(root);
 };
 
 
 const root = TreeNode(1);
 root.left = TreeNode(2);
-root.right = TreeNode(3);
-// root.left.left = TreeNode(3);
+root.left.left = TreeNode(3);
 // root.left.right = TreeNode(4);
-// root.right.left = TreeNode(4);
-// root.right.right = TreeNode(3);
+root.right = TreeNode(3);
+root.right.left = TreeNode(4);
+root.right.right = TreeNode(3);
 
 console.log(isSymmetric(root));
