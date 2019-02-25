@@ -13,35 +13,43 @@ const sequence = (array, elementIndex, end) => {
   return output;
 };
 
-const spiral = (width) => {
+const spiralSequence = (matrix) => {
+  const width = matrix[0].length;
+  const height = matrix.length;
   let leftmost = 0;
   let rightmost = width - 1;
   let top = leftmost;
-  let bottom = rightmost;
+  let bottom = height - 1;
   let direction = 0;
+  const output = [];
 
   while (rightmost >= leftmost && bottom >= top) {
     switch (direction % 4) {
       case 0:
-        console.log(sequence([leftmost, top], 0, rightmost));
+        sequence([top, leftmost], 1, rightmost).forEach((coords) => { output.push(matrix[coords[0]][coords[1]]); });
         top += 1;
         break;
       case 1:
-        console.log(sequence([rightmost, top], 1, bottom));
+        sequence([top, rightmost], 0, bottom).forEach((coords) => { output.push(matrix[coords[0]][coords[1]]); });
         rightmost -= 1;
         break;
       case 2:
-        console.log(sequence([rightmost, bottom], 0, leftmost));
+        sequence([bottom, rightmost], 1, leftmost).forEach((coords) => { output.push(matrix[coords[0]][coords[1]]); });
         bottom -= 1;
         break;
       case 3:
-        console.log(sequence([leftmost, bottom], 1, top));
+        sequence([bottom, leftmost], 0, top).forEach((coords) => { output.push(matrix[coords[0]][coords[1]]); });
         leftmost += 1;
         break;
     }
     direction += 1;
   }
+  return output;
 };
 
 
-spiral(3);
+console.log(spiralSequence([
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9, 10, 11, 12],
+]));
