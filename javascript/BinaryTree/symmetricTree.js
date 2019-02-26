@@ -1,3 +1,5 @@
+const { TreeNode } = require('./treeNode');
+
 const isSymmetric = (root) => {
   if (!root) return true;
 

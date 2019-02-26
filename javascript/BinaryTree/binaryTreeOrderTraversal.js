@@ -1,8 +1,4 @@
-const TreeNode = (val) => {
-  const left = null;
-  const right = null;
-  return { left, right, val };
-};
+
 
 const levelOrder = (root) => {
   const result = [];
